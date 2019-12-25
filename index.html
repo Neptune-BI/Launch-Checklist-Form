@@ -31,8 +31,8 @@
             <h2 id="launchStatus">Awaiting Information Before Launch</h2>
             <div  id="faultyItems">
                 <ol>
-                    <li id="pilotStatus">Pilot Ready</li>
-                    <li id="copilotStatus">Co-pilot Ready</li>
+                    <li id="pilotStatus">Pilot ${pilotName} Ready</li>
+                    <li id="copilotStatus">Co-pilot ${copilotName}Ready</li>
                     <li id="fuelStatus">Fuel level high enough for launch</li>
                     <li id="cargoStatus">Cargo mass low enough for launch</li>
                 </ol>
@@ -40,8 +40,6 @@
         </div> 
     <script>
     window.addEventListener("load", function() {
-        // put DOM code here to ensure elements have been loaded
-        //console.log('window loaded');
         let form = document.querySelector("form");
         form.addEventListener("submit", function(event) {
             let pilotnameInput = document.querySelector("input[name=pilotName]");
@@ -50,10 +48,35 @@
             let cargomassInput = document.querySelector("input[name=cargoMass]");
             if (pilotnameInput.value === "" || copilotnameInput.value === ""|| fuellevelInput.value === ""|| cargomassInput.value === "")  {
                 alert("All Field are required!");
-                // stop the form submission
+                 // stop the form submission
                 event.preventDefault();
-            }
-        });
+            } 
+            else if (fuellevelInput.value < 10000) { 
+                document.getElementById("launchStatus").innerHTML = "Shuttle Not Ready for Launch";
+                let launchStatus = document.querySelector("#launchStatus");
+                launchStatus.style.color = "Red";
+                let faultyItems = document.querySelector("#faultyItems");
+                faultyItems.style.visibility = "visible"
+                document.getElementById("fuelStatus").innerHTML = "fuel status stating that there is not enough fuel for the journey"
+                 } 
+             else if (cargomassInput.value > 10000) { 
+                document.getElementById("launchStatus").innerHTML = "Shuttle Not Ready for Launch";
+                let launchStatus = document.querySelector("#launchStatus");
+                launchStatus.style.color = "Red";
+                let faultyItems = document.querySelector("#faultyItems");
+                faultyItems.style.visibility = "visible"
+                document.getElementById("fuelStatus").innerHTML = "there is too much mass for the shuttle to take of"
+                 } 
+              else 
+              {
+                document.getElementById("launchStatus").innerHTML = "Shuttle Ready for Launch";
+                let launchStatus = document.querySelector("#launchStatus");
+                launchStatus.style.color = "Green";
+                let faultyItems = document.querySelector("#faultyItems");
+                faultyItems.style.visibility = "visible"    
+              }        
+        });  
+           
     });
 </script>      
     </body>
